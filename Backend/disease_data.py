@@ -78,5 +78,93 @@ disease_data = {
         "solution_np": "Propiconazole वा Tebuconazole छर्कनुहोस्। लसुन पानी छर्कनुहोस्।",
         "image_url": "https://10.0.7.101:5000/static/images/Corn_(maize)___Northern_Leaf_Blight.png",
         "buy_link": "https://yourstore.com/buy/Corn_(maize)___Northern_Leaf_Blight"
+    },
+    "Grape___healthy": {
+        "description_en": "Lush green leaves and firm grape clusters with no disease signs.",
+        "solution_en": "Ensure full sun, well-drained soil, yearly pruning, and balanced fertilization.",
+        "description_np": "हरियो पात र बलिया अंगुरको गुछा भएको स्वस्थ रुख।",
+        "solution_np": "घाम, राम्रो माटो, वार्षिक छाँटछाँट र सन्तुलित मल प्रयोग गर्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Grape___healthy.png",
+        "buy_link": "https://yourstore.com/buy/Grape___healthy"
+    },
+    "Grape___Black_rot": {
+        "description_en": "Fungal disease causing dark spots on leaves and fruit, leading to shriveled, dropped grapes.",
+        "solution_en": "Apply Captan, Mancozeb, or Myclobutanil. Prune infected parts. Use neem oil.",
+        "description_np": "पात र फलमा कालो दाग लाग्ने फङ्गस रोग जसले फल सुक्न र झर्न लगाउँछ।",
+        "solution_np": "Captan, Mancozeb वा Myclobutanil छर्कनुहोस्। संक्रमित भाग हटाउनुहोस्। नील तले छर्कनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Grape___Black_rot.png",
+        "buy_link": "https://yourstore.com/buy/Grape___Black_rot"
+    },
+    "Grape___Esca_(Black_Measles)": {
+        "description_en": "Trunk fungal disease causing blackened fruit and leaf spotting.",
+        "solution_en": "Remove infected vines. Apply Thiophanate-methyl. Improve soil drainage.",
+        "description_np": "एस्का रोगले पातमा दाग र फलमा कालोपन ल्याउँछ।",
+        "solution_np": "संक्रमित भाग हटाउनुहोस्। Thiophanate-methyl प्रयोग गर्नुहोस्। माटोको निकास सुधार्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Grape___Esca_(Black_Measles).png",
+        "buy_link": "https://yourstore.com/buy/Grape___Esca_(Black_Measles)"
+    },
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+        "description_en": "Yellow to brown leaf spots causing premature defoliation.",
+        "solution_en": "Use Chlorothalonil or Mancozeb. Remove infected leaves. Spray neem oil.",
+        "description_np": "पातमा पहेँलो र खरैो दाग लाग्ने रोग जसले पात झार्न सक्छ।",
+        "solution_np": "Chlorothalonil वा Mancozeb प्रयोग गर्नुहोस्। संक्रमित पात हटाउनुहोस्। नील तले छर्कनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Grape___Leaf_blight_(Isariopsis_Leaf_Spot).png",
+        "buy_link": "https://yourstore.com/buy/Grape___Leaf_blight"
+    },
+    "Peach___healthy": {
+        "description_en": "Glossy green leaves and healthy, well-formed peaches with no signs of pests or disease.",
+        "solution_en": "Use well-drained soil, deep watering, annual pruning, and balanced fertilizer.",
+        "description_np": "स्वस्थ आरूमा चिल्ला हरिया पात र राम्रो आकारका फल हुन्छन्।",
+        "solution_np": "राम्रो माटो, गहिरो पानी, वार्षिक छाँटछाँट र मल प्रयोग गर्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Peach___healthy.png",
+        "buy_link": "https://yourstore.com/buy/Peach___healthy"
+    },
+    "Peach___Bacterial_spot": {
+        "description_en": "Dark spots on leaves and fruit causing cracks and premature fruit drop.",
+        "solution_en": "Use copper-based bactericides. Apply neem oil. Maintain sanitation.",
+        "description_np": "पात र फलमा कालो दाग आउने रोग जसले फल झर्न सक्छ।",
+        "solution_np": "तामा भएको ब्याक्टेरिसाइड प्रयोग गर्नुहोस्। नील तले छर्कनुहोस्। सरसफाइ कायम राख्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Peach___Bacterial_spot.png",
+        "buy_link": "https://yourstore.com/buy/Peach___Bacterial_spot"
+    },
+    "Pepper,_bell___healthy": {
+        "description_en": "Firm leaves and fruit without spots or holes, indicating a healthy plant.",
+        "solution_en": "Use fertile soil, consistent watering, support stakes, and monitor pests.",
+        "description_np": "बलियो पात र फल भएको, दागरहित स्वस्थ बोट।",
+        "solution_np": "उपजाउ माटो प्रयोग गर्नुहोस्। नियमित पानी दिनुहोस्। काठको सहारा दिनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Pepper,_bell___healthy.png",
+        "buy_link": "https://yourstore.com/buy/Pepper,_bell___healthy"
+    },
+    "Pepper,_bell___Bacterial_spot": {
+        "description_en": "Water-soaked lesions on leaves and fruit leading to decay and tissue collapse.",
+        "solution_en": "Use copper hydroxide sprays. Rotate crops. Neem oil can help.",
+        "description_np": "पात र फलमा पानीले भिजे जस्तो देखिने दाग। यो टिश्यु नष्ट गर्दछ।",
+        "solution_np": "Copper hydroxide छर्कनुहोस्। बाली फेरबदल गर्नुहोस्। नील तले छर्कनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Pepper,_bell___Bacterial_spot.png",
+        "buy_link": "https://yourstore.com/buy/Pepper,_bell___Bacterial_spot"
+    },
+    "Potato___healthy": {
+        "description_en": "Green foliage without spots, strong stems, and well-formed tubers.",
+        "solution_en": "Use well-drained soil and avoid overwatering. Apply balanced fertilizers.",
+        "description_np": "हरियो पात र बलियो हाँगा भएको, दागरहित स्वस्थ आलु।",
+        "solution_np": "राम्रो माटो, कम पानी र सन्तुलित मल प्रयोग गर्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Potato___healthy.png",
+        "buy_link": "https://yourstore.com/buy/Potato___healthy"
+    },
+    "Potato___Early_blight": {
+        "description_en": "Brown concentric spots on leaves, leading to early leaf drop and lower yield.",
+        "solution_en": "Apply Chlorothalonil or Mancozeb. Use neem oil and rotate crops.",
+        "description_np": "पातमा गोलो, घेरा भएको खरैो दाग बनाउने रोग।",
+        "solution_np": "Chlorothalonil वा Mancozeb प्रयोग गर्नुहोस्। नील तले छर्कनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Potato___Early_blight.png",
+        "buy_link": "https://yourstore.com/buy/Potato___Early_blight"
+    },
+    "Potato___Late_blight": {
+        "description_en": "Large, dark water-soaked lesions on leaves and tubers spreading rapidly.",
+        "solution_en": "Apply Metalaxyl or Mancozeb during wet weather. Copper or neem oil helps.",
+        "description_np": "पात र आलुमा भिजेको जस्तो देखिने ठूलो दाग बनाउने रोग।",
+        "solution_np": "Metalaxyl वा Mancozeb प्रयोग गर्नुहोस्। नील तले वा तामाजन्य औषधि प्रयोग गर्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Potato___Late_blight.png",
+        "buy_link": "https://yourstore.com/buy/Potato___Late_blight"
     }
 }
