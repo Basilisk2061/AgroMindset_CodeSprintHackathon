@@ -24,17 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final ImagePicker _picker = ImagePicker();
 
   final List<Map<String, String>> cropTips = [
-    { "crop": "Wheat", "tip": "Use certified seeds and irrigate at key stages like crown root initiation and flowering." },
-    { "crop": "Rice", "tip": "Transplant seedlings 20-25 days old and ensure proper water management." },
-    { "crop": "Maize", "tip": "Apply nitrogen fertilizer in 3 split doses and use improved varieties." },
-    { "crop": "Tomato", "tip": "Stake the plants, use mulch to conserve water, and monitor for blight." },
-    { "crop": "Potato", "tip": "Use disease-free tubers and apply ridge planting to improve aeration." },
-    { "crop": "Apple", "tip": "Plant in well-drained soil; prune in winter for better fruiting." },
-    { "crop": "Orange", "tip": "Irrigate frequently in summer and protect from citrus canker." },
-    { "crop": "Grapes", "tip": "Train vines on trellises and spray against powdery mildew." },
-    { "crop": "Strawberry", "tip": "Use mulching to protect fruit and irrigate with drip method." },
-    { "crop": "Chilli", "tip": "Avoid waterlogging and monitor for aphids and mites." },
-    { "crop": "Cauliflower", "tip": "Plant in cool season and apply nitrogen fertilizer in 2 splits." },
+    {"crop": "Apple", "tip": "Plant in well-drained soil; prune in winter for better fruiting."},
+    {"crop": "Cauli", "tip": "Plant in cool season and apply nitrogen fertilizer in 2 splits."},
+    {"crop": "Chilli", "tip": "Avoid waterlogging and monitor for aphids and mites."},
+    {"crop": "Potato", "tip": "Use disease-free tubers and apply ridge planting to improve aeration."},
+    {"crop": "Strawberry", "tip": "Use mulching to protect fruit and irrigate with drip method."},
+    {"crop": "Tomato", "tip": "Stake the plants, use mulch to conserve water, and monitor for blight."},
   ];
 
   final List<String> cityOptions = [
@@ -66,13 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
         LocationPermission permission = await Geolocator.checkPermission();
         if (permission == LocationPermission.denied) {
           permission = await Geolocator.requestPermission();
-          if (permission == LocationPermission.denied) {
-            throw Exception('Location permissions are denied');
-          }
+          if (permission == LocationPermission.denied) throw Exception('Permission denied');
         }
-        if (permission == LocationPermission.deniedForever) {
-          throw Exception('Location permissions are permanently denied');
-        }
+        if (permission == LocationPermission.deniedForever) throw Exception('Permission permanently denied');
 
         Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         query = '${position.latitude},${position.longitude}';
@@ -103,9 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } catch (_) {
       setState(() {
-        _weather = isNepali
-            ? 'माफ गर्नुहोस्, मौसम ल्याउन सकिएन।'
-            : 'Sorry, failed to load weather.';
+        _weather = isNepali ? 'माफ गर्नुहोस्, मौसम ल्याउन सकिएन।' : 'Sorry, failed to load weather.';
         _isLoadingWeather = false;
       });
     }
@@ -197,11 +186,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: cropTips.map((item) {
                   final crop = item['crop']!;
                   final tip = item['tip']!;
-                  final imageAsset = crop.toLowerCase() == 'apple'
-                    ? 'assets/images/apple.png'
-                    : crop.toLowerCase() == 'potato'
-                        ? 'assets/images/potato.jpeg'
-                        : 'assets/images/${crop.toLowerCase()}.png';
+                  final fileName = crop.toLowerCase() == 'potato'
+                      ? 'potato.jpeg'
+                      : '${crop.toLowerCase()}.png';
 
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
@@ -223,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 90,
                         height: 90,
                         decoration: BoxDecoration(
-                          color: Colors.white10,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Column(
@@ -232,16 +219,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(6),
                                 child: Image.asset(
-                                  imageAsset,
+                                  'assets/images/$fileName',
                                   fit: BoxFit.contain,
-                                  errorBuilder: (_, __, ___) => const Icon(Icons.image_not_supported, color: Colors.white),
+                                  errorBuilder: (_, __, ___) => const Icon(Icons.image_not_supported),
                                 ),
                               ),
                             ),
                             Text(
                               crop,
                               textAlign: TextAlign.center,
-                              style: const TextStyle(color: Colors.white, fontSize: 11),
+                              style: const TextStyle(color: Colors.black, fontSize: 11),
                             ),
                           ],
                         ),
@@ -285,7 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: const [
               Column(
                 children: [
-                  Icon(Icons.sick, size: 40, color: Colors.brown),
+                  Icon(Icons.eco, size: 40, color: Colors.green),
                   SizedBox(height: 4),
                   Text('Identify Problem', style: TextStyle(fontSize: 12, color: Colors.white)),
                 ],
