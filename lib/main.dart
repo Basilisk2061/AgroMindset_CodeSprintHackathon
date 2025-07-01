@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/login_signup_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,11 +8,18 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'rabin Demo',
+
+      title: 'Agri Assistant',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Roboto'),
+      home: const LoginSignupPage(),
+
+
+      
+
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -117,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+>>>>>>> 5bf7a323ea021f25ffd1649e0208c9b1c3ef078b
     );
   }
 }
