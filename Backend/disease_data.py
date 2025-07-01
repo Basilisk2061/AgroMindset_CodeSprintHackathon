@@ -13,7 +13,7 @@ disease_data = {
         "description_np": "फल र पातमा कालो घेरा भएका दागहरू बनाउने फङ्गस रोग। फल सड्न र पात झर्न सक्छ।",
         "solution_np": "Chlorothalonil वा Captan प्रयोग गर्नुहोस्। संक्रमित भाग हटाउनुहोस्। नील तले छर्कनुहोस्।",
         "image_url": "http://10.0.7.101:5000/static/images/Apple___Black_rot.png",
-        "buy_link": "http://yourstore.com/buy/Apple___Black_rot"
+        "buy_link": "https://www.nepal.ubuy.com/en/product/7GXALMCBE-chlorothalonil-fungicide-2-5-gallon-daconil-fungicide-bravo-fungicide-chlorothanil-720?srsltid=AfmBOooTV_cKCXfJvjWTzELCalQ5aYZWZ4UsDxrJHqINcShD74Vi-WOS"
     },
     "Apple___Cedar_apple_rust": {
         "description_en": "Bright orange rust spots on leaves and fruit caused by fungal spread between apple and cedar trees.",
