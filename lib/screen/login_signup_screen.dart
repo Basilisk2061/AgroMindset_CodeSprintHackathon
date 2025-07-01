@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:my_new_app/screens/home_screen.dart';
+import 'package:plantd/screen/home_screen.dart';
 import 'login_signup_screen.dart';
 
 
