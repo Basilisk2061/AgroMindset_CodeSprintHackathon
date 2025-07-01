@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'login_signup_screen.dart';
 import 'upload_screen.dart';
+import 'history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final bool isNepali;
