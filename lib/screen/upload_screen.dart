@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_tts/flutter_tts.dart'; // ✅ New import
+import 'package:flutter_tts/flutter_tts.dart'; 
 import '../models/prediction_model.dart';
 import '../database/database_helper.dart';
 
@@ -28,7 +28,7 @@ class UploadScreen extends StatefulWidget {
 class _UploadScreenState extends State<UploadScreen> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
-  final FlutterTts flutterTts = FlutterTts(); // ✅ TTS instance
+  final FlutterTts flutterTts = FlutterTts(); 
 
   String? _predictionResult;
   String? _confidence;
@@ -110,7 +110,7 @@ class _UploadScreenState extends State<UploadScreen> {
           ),
         );
 
-        await _speak(); // ✅ Speak automatically after prediction
+        await _speak(); // gitSpeak automatically after prediction
       } else {
         setState(() {
           _predictionResult = 'Error: ${response.statusCode}';
