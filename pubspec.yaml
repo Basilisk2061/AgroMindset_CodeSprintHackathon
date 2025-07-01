@@ -32,9 +32,12 @@ flutter:
   uses-material-design: true
 
   assets:
+
     - assets/images/
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/icons/logo.png"
+
+
