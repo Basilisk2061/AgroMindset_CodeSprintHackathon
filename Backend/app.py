@@ -44,6 +44,18 @@ def predict():
     predicted_class = classes[predicted_index] 
     confidence = float(np.max(predictions))
 
+    if confidence < 0.3:
+        return jsonify({
+            "class": "Invalid",
+            "confidence": round(confidence, 4),
+            "description_en": "",
+            "solution_en": "",
+            "description_np": "",
+            "solution_np": "",
+            "image_url": "",
+            "buy_link": ""
+        })
+
     # Fetch extra data from disease_data
     disease_info = disease_data.get(predicted_class, {})
 

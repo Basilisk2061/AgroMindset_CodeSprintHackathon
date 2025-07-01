@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_tts/flutter_tts.dart'; 
+import 'package:flutter_tts/flutter_tts.dart';
 import '../models/prediction_model.dart';
 import '../database/database_helper.dart';
 
@@ -28,7 +28,7 @@ class UploadScreen extends StatefulWidget {
 class _UploadScreenState extends State<UploadScreen> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
-  final FlutterTts flutterTts = FlutterTts(); 
+  final FlutterTts flutterTts = FlutterTts();
 
   String? _predictionResult;
   String? _confidence;
@@ -64,9 +64,14 @@ class _UploadScreenState extends State<UploadScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    flutterTts.stop(); // ✅ Stop TTS when screen is disposed
+    super.dispose();
+  }
+
   Future<void> _speak() async {
     String toSpeak = '';
-
     if (_description != null) {
       toSpeak += widget.isNepali ? 'विवरण: $_description\n' : 'Description: $_description\n';
     }
@@ -110,7 +115,7 @@ class _UploadScreenState extends State<UploadScreen> {
           ),
         );
 
-        await _speak(); // gitSpeak automatically after prediction
+        await _speak();
       } else {
         setState(() {
           _predictionResult = 'Error: ${response.statusCode}';
@@ -142,7 +147,10 @@ class _UploadScreenState extends State<UploadScreen> {
         title: Text(text['title']!, style: const TextStyle(color: Colors.white)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () async {
+            await flutterTts.stop(); // ✅ Stop TTS before navigating back
+            Navigator.pop(context);
+          },
         ),
       ),
       body: Container(
@@ -167,7 +175,6 @@ class _UploadScreenState extends State<UploadScreen> {
               else
                 const Icon(Icons.image, size: 100, color: Colors.white54),
               const SizedBox(height: 16),
-
               if (_predictionResult != null) ...[
                 Text('${text['result']}${_predictionResult!}',
                     style: const TextStyle(color: Colors.white, fontSize: 18)),
@@ -197,7 +204,7 @@ class _UploadScreenState extends State<UploadScreen> {
                   ),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
-                  onPressed: _speak, // ✅ Manual TTS trigger
+                  onPressed: _speak,
                   icon: const Icon(Icons.volume_up),
                   label: Text(text['speak']!),
                   style: ElevatedButton.styleFrom(
@@ -205,7 +212,6 @@ class _UploadScreenState extends State<UploadScreen> {
                   ),
                 ),
               ],
-
               const SizedBox(height: 32),
               _actionButton(Icons.camera_alt, text['camera']!, () => _pickImage(ImageSource.camera)),
               const SizedBox(height: 20),
