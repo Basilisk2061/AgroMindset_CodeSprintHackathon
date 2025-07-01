@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'upload_screen.dart';
 import 'login_signup_screen.dart';
-import 'history_screen.dart';
+import 'upload_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final bool isNepali;
