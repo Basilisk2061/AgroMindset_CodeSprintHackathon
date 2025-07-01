@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_tts/flutter_tts.dart'; // ✅ New import
 import '../models/prediction_model.dart';
 import '../database/database_helper.dart';
 
@@ -27,6 +28,8 @@ class UploadScreen extends StatefulWidget {
 class _UploadScreenState extends State<UploadScreen> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
+  final FlutterTts flutterTts = FlutterTts(); // ✅ TTS instance
+
   String? _predictionResult;
   String? _confidence;
   String? _description;
@@ -41,6 +44,7 @@ class _UploadScreenState extends State<UploadScreen> {
           'gallery': 'ग्यालरीबाट अपलोड गर्नुहोस्',
           'back': 'फिर्ता जानुहोस्',
           'result': 'नतिजा: ',
+          'speak': 'पढ्नुहोस्',
         }
       : {
           'title': 'Upload Image for ${widget.cropName}',
@@ -48,6 +52,7 @@ class _UploadScreenState extends State<UploadScreen> {
           'gallery': 'Upload from Gallery',
           'back': 'Go Back',
           'result': 'Result: ',
+          'speak': 'Speak',
         };
 
   @override
@@ -59,15 +64,20 @@ class _UploadScreenState extends State<UploadScreen> {
     }
   }
 
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await _picker.pickImage(source: source, imageQuality: 75);
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-        _predictionResult = null;
-      });
-      await _uploadImage(_image!);
+  Future<void> _speak() async {
+    String toSpeak = '';
+
+    if (_description != null) {
+      toSpeak += widget.isNepali ? 'विवरण: $_description\n' : 'Description: $_description\n';
     }
+    if (_solution != null) {
+      toSpeak += widget.isNepali ? 'समाधान: $_solution\n' : 'Solution: $_solution\n';
+    }
+
+    await flutterTts.setLanguage(widget.isNepali ? 'ne-NP' : 'en-US');
+    await flutterTts.setSpeechRate(0.45);
+    await flutterTts.setPitch(1.0);
+    await flutterTts.speak(toSpeak);
   }
 
   Future<void> _uploadImage(File imageFile) async {
@@ -75,7 +85,6 @@ class _UploadScreenState extends State<UploadScreen> {
       'POST',
       Uri.parse('http://10.0.7.101:5000/predict'),
     );
-
     request.files.add(await http.MultipartFile.fromPath('file', imageFile.path));
 
     try {
@@ -100,6 +109,8 @@ class _UploadScreenState extends State<UploadScreen> {
             timestamp: timestamp,
           ),
         );
+
+        await _speak(); // ✅ Speak automatically after prediction
       } else {
         setState(() {
           _predictionResult = 'Error: ${response.statusCode}';
@@ -109,6 +120,17 @@ class _UploadScreenState extends State<UploadScreen> {
       setState(() {
         _predictionResult = 'Error: $e';
       });
+    }
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source, imageQuality: 75);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+        _predictionResult = null;
+      });
+      await _uploadImage(_image!);
     }
   }
 
@@ -173,6 +195,15 @@ class _UploadScreenState extends State<UploadScreen> {
                       backgroundColor: Colors.orange,
                     ),
                   ),
+                const SizedBox(height: 10),
+                ElevatedButton.icon(
+                  onPressed: _speak, // ✅ Manual TTS trigger
+                  icon: const Icon(Icons.volume_up),
+                  label: Text(text['speak']!),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueGrey,
+                  ),
+                ),
               ],
 
               const SizedBox(height: 32),
