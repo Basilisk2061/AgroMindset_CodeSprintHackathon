@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:plantd/screen/home_screen.dart';
-import 'login_signup_screen.dart';
 
 
 class LoginSignupPage extends StatefulWidget {
