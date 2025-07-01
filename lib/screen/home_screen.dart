@@ -338,7 +338,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             },
-            child: Text(isNepali ? 'फोटो अपलोड गर्नुहोस्' : 'Upload Photo'),
+            child: Text(
+            isNepali ? 'फोटो अपलोड गर्नुहोस्' : 'Upload Photo',
+            style: const TextStyle(color: Colors.white), // 👈 set text color
+          ),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.teal,
               minimumSize: const Size(double.infinity, 48),
