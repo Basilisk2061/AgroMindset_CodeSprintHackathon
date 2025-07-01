@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+from disease_data import disease_data 
 
 # Load model
 model = tf.keras.models.load_model("Backend/model/model_keras.h5")
@@ -40,11 +41,21 @@ def predict():
     # Predict
     predictions = model.predict(image_np)[0]
     predicted_index = int(np.argmax(predictions))
+    predicted_class = classes[predicted_index] 
     confidence = float(np.max(predictions))
+
+    # Fetch extra data from disease_data
+    disease_info = disease_data.get(predicted_class, {})
 
     return jsonify({
         "class": classes[predicted_index],
-        "confidence": round(confidence, 4)
+        "confidence": round(confidence, 4),
+        "description_en": disease_info.get("description_en", ""),
+        "solution_en": disease_info.get("solution_en", ""),
+        "description_np": disease_info.get("description_np", ""),
+        "solution_np": disease_info.get("solution_np", ""),
+        "image_url": disease_info.get("image_url", ""),
+        "buy_link": disease_info.get("buy_link", "")
     })
 
 if __name__ == "__main__":

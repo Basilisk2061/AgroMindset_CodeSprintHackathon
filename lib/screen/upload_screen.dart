@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/prediction_model.dart';
 import '../database/database_helper.dart';
 
@@ -27,6 +28,11 @@ class _UploadScreenState extends State<UploadScreen> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
   String? _predictionResult;
+  String? _confidence;
+  String? _description;
+  String? _solution;
+  String? _imageUrl;
+  String? _buyLink;
 
   Map<String, String> get text => widget.isNepali
       ? {
@@ -79,17 +85,21 @@ class _UploadScreenState extends State<UploadScreen> {
         var decoded = json.decode(responseBody);
         setState(() {
           _predictionResult = decoded['class'];
+          _confidence = decoded['confidence'].toString();
+          _description = widget.isNepali ? decoded['description_np'] : decoded['description_en'];
+          _solution = widget.isNepali ? decoded['solution_np'] : decoded['solution_en'];
+          _imageUrl = decoded['image_url'];
+          _buyLink = decoded['buy_link'];
         });
 
-        // igSave to database
         String timestamp = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
-       await DatabaseHelper.instance.insertPrediction(
-        PredictionModel(
-          result: decoded['class'],
-          imagePath: imageFile.path, 
-          timestamp: timestamp,
-        ),
-      );
+        await DatabaseHelper.instance.insertPrediction(
+          PredictionModel(
+            result: decoded['class'],
+            imagePath: imageFile.path,
+            timestamp: timestamp,
+          ),
+        );
       } else {
         setState(() {
           _predictionResult = 'Error: ${response.statusCode}';
@@ -123,27 +133,54 @@ class _UploadScreenState extends State<UploadScreen> {
             end: Alignment.bottomRight,
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (_image != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.file(_image!, height: 200),
-              )
-            else
-              const Icon(Icons.image, size: 100, color: Colors.white54),
-            const SizedBox(height: 16),
-            if (_predictionResult != null)
-              Text(
-                '${text['result']}${_predictionResult!}',
-                style: const TextStyle(color: Colors.white, fontSize: 18),
-              ),
-            const SizedBox(height: 32),
-            _actionButton(Icons.camera_alt, text['camera']!, () => _pickImage(ImageSource.camera)),
-            const SizedBox(height: 20),
-            _actionButton(Icons.photo_library, text['gallery']!, () => _pickImage(ImageSource.gallery)),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (_image != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.file(_image!, height: 200),
+                )
+              else
+                const Icon(Icons.image, size: 100, color: Colors.white54),
+              const SizedBox(height: 16),
+
+              if (_predictionResult != null) ...[
+                Text('${text['result']}${_predictionResult!}',
+                    style: const TextStyle(color: Colors.white, fontSize: 18)),
+                if (_confidence != null)
+                  Text('Confidence: $_confidence',
+                      style: const TextStyle(color: Colors.white70)),
+                const SizedBox(height: 16),
+                if (_description != null)
+                  Text('Description:\n$_description',
+                      style: const TextStyle(color: Colors.white)),
+                const SizedBox(height: 8),
+                if (_solution != null)
+                  Text('Solution:\n$_solution',
+                      style: const TextStyle(color: Colors.lightGreenAccent)),
+                const SizedBox(height: 8),
+                if (_imageUrl != null && _imageUrl!.startsWith('http'))
+                  Image.network(_imageUrl!, height: 120),
+                const SizedBox(height: 8),
+                if (_buyLink != null && _buyLink!.startsWith('http'))
+                  ElevatedButton.icon(
+                    onPressed: () => _launchURL(_buyLink!),
+                    icon: const Icon(Icons.shopping_cart),
+                    label: const Text('Buy Medicine'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                    ),
+                  ),
+              ],
+
+              const SizedBox(height: 32),
+              _actionButton(Icons.camera_alt, text['camera']!, () => _pickImage(ImageSource.camera)),
+              const SizedBox(height: 20),
+              _actionButton(Icons.photo_library, text['gallery']!, () => _pickImage(ImageSource.gallery)),
+            ],
+          ),
         ),
       ),
     );
@@ -160,5 +197,12 @@ class _UploadScreenState extends State<UploadScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
+  }
+
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
   }
 }
