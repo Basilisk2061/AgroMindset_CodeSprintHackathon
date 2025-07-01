@@ -197,7 +197,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: cropTips.map((item) {
                   final crop = item['crop']!;
                   final tip = item['tip']!;
-                  final imageAsset = 'assets/images/${crop.toLowerCase()}.png';
+                  final imageAsset = crop.toLowerCase() == 'apple'
+                      ? 'assets/images/apple.png'
+                      : 'assets/images/${crop.toLowerCase()}.png';
 
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
