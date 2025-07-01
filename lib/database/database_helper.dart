@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/prediction_model.dart';
+import '../models/user_model.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
@@ -26,6 +27,15 @@ class DatabaseHelper {
         timestamp TEXT
       )
     ''');
+
+    await db.execute('''
+      CREATE TABLE users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT,
+        password TEXT,
+        confirm_password TEXT
+      )
+    ''');
   }
 
   Future<int> insertPrediction(PredictionModel prediction) async {
@@ -37,6 +47,11 @@ class DatabaseHelper {
     final db = await instance.database;
     final result = await db.query('predictions', orderBy: 'id DESC');
     return result.map((json) => PredictionModel.fromMap(json)).toList();
+  }
+
+  Future<int> insertUser(UserModel user) async {
+    final db = await instance.database;
+    return await db.insert('users', user.toMap());
   }
 
   Future close() async {
