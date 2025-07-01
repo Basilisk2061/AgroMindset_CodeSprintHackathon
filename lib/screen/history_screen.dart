@@ -47,8 +47,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
         backgroundColor: const Color(0xFF0f2027),
+        iconTheme: const IconThemeData(color: Colors.white), // ← Icons white
+        titleTextStyle: const TextStyle(                      // ← Title white
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
+        title: Text(title),
         actions: [
           IconButton(
             icon: const Icon(Icons.translate),
@@ -97,7 +103,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
           final predictions = snapshot.data!;
           if (predictions.isEmpty) {
             return Center(
-              child: Text(isNepali ? 'कुनै रेकर्ड छैन।' : 'No history yet.'),
+              child: Text(
+                isNepali ? 'कुनै रेकर्ड छैन।' : 'No history yet.',
+                style: const TextStyle(color: Colors.white),
+              ),
             );
           }
 
@@ -148,6 +157,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           );
         },
       ),
+      backgroundColor: const Color(0xFF2c5364),
     );
   }
 }

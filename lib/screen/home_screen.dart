@@ -23,6 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
   String selectedCity = 'Current Location';
   final ImagePicker _picker = ImagePicker();
 
+  final List<Map<String, String>> cropTips = [
+    { "crop": "Wheat", "tip": "Use certified seeds and irrigate at key stages like crown root initiation and flowering." },
+    { "crop": "Rice", "tip": "Transplant seedlings 20-25 days old and ensure proper water management." },
+    { "crop": "Maize", "tip": "Apply nitrogen fertilizer in 3 split doses and use improved varieties." },
+    { "crop": "Tomato", "tip": "Stake the plants, use mulch to conserve water, and monitor for blight." },
+    { "crop": "Potato", "tip": "Use disease-free tubers and apply ridge planting to improve aeration." },
+    { "crop": "Apple", "tip": "Plant in well-drained soil; prune in winter for better fruiting." },
+    { "crop": "Orange", "tip": "Irrigate frequently in summer and protect from citrus canker." },
+    { "crop": "Grapes", "tip": "Train vines on trellises and spray against powdery mildew." },
+    { "crop": "Strawberry", "tip": "Use mulching to protect fruit and irrigate with drip method." },
+    { "crop": "Chilli", "tip": "Avoid waterlogging and monitor for aphids and mites." },
+    { "crop": "Cauliflower", "tip": "Plant in cool season and apply nitrogen fertilizer in 2 splits." },
+  ];
+
   final List<String> cityOptions = [
     'Current Location',
     'Kathmandu',
@@ -60,9 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           throw Exception('Location permissions are permanently denied');
         }
 
-        Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-        );
+        Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         query = '${position.latitude},${position.longitude}';
       } else {
         query = selectedCity;
@@ -70,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
       final url =
           'https://api.weatherapi.com/v1/current.json?key=$apiKey&q=$query&lang=${isNepali ? 'ne' : 'en'}';
-
       final response = await http.get(Uri.parse(url));
       if (response.statusCode != 200) throw Exception('API Error');
 
@@ -119,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildWeatherBox() {
     return Container(
-      width: double.infinity,
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
@@ -134,11 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Text(
                   isNepali ? 'आजको मौसम' : 'Today\'s Weather',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
               DropdownButton<String>(
@@ -154,22 +160,94 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                   fetchWeather();
                 },
-                items: cityOptions.map((String city) {
-                  return DropdownMenuItem<String>(
-                    value: city,
-                    child: Text(city, style: const TextStyle(color: Colors.white)),
-                  );
-                }).toList(),
+                items: cityOptions.map((city) => DropdownMenuItem(value: city, child: Text(city))).toList(),
               ),
             ],
           ),
           const SizedBox(height: 10),
           _isLoadingWeather
               ? const Center(child: CircularProgressIndicator(color: Colors.white))
-              : Text(
-                  _weather,
-                  style: const TextStyle(color: Colors.white70, fontSize: 16),
-                ),
+              : Text(_weather, style: const TextStyle(color: Colors.white70, fontSize: 16)),
+        ],
+      ),
+    );
+  }
+
+  Widget buildCropTipsCard() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(top: 16),
+      decoration: BoxDecoration(
+        color: Colors.white12,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            isNepali ? 'बालीको सल्लाह' : 'Crop Cultivation Tips',
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 110,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: cropTips.map((item) {
+                  final crop = item['crop']!;
+                  final tip = item['tip']!;
+                  final imageAsset = 'assets/images/${crop.toLowerCase()}.png';
+
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: InkWell(
+                      onTap: () => showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text(crop),
+                          content: Text(tip),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Close'),
+                            )
+                          ],
+                        ),
+                      ),
+                      child: Container(
+                        width: 90,
+                        height: 90,
+                        decoration: BoxDecoration(
+                          color: Colors.white10,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(6),
+                                child: Image.asset(
+                                  imageAsset,
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (_, __, ___) => const Icon(Icons.image_not_supported, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              crop,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.white, fontSize: 11),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -180,18 +258,14 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.only(top: 16),
       decoration: BoxDecoration(
-        color: Colors.white12, // Same as weather container
+        color: Colors.white12,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         children: [
           Text(
             isNepali ? 'बिरुवाको समस्या?' : 'Plant Problems?',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(
@@ -204,17 +278,17 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
+            children: const [
               Column(
-                children: const [
+                children: [
                   Icon(Icons.sick, size: 40, color: Colors.brown),
                   SizedBox(height: 4),
                   Text('Identify Problem', style: TextStyle(fontSize: 12, color: Colors.white)),
                 ],
               ),
-              const Icon(Icons.arrow_forward, color: Colors.white70),
+              Icon(Icons.arrow_forward, color: Colors.white70),
               Column(
-                children: const [
+                children: [
                   Icon(Icons.search, size: 40, color: Colors.blueAccent),
                   SizedBox(height: 4),
                   Text('Get Solution', style: TextStyle(fontSize: 12, color: Colors.white)),
@@ -235,16 +309,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             },
-            child: Text(
-              isNepali ? 'फोटो अपलोड गर्नुहोस्' : 'Upload Photo',
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text(isNepali ? 'फोटो अपलोड गर्नुहोस्' : 'Upload Photo'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.teal,
               minimumSize: const Size(double.infinity, 48),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
           ),
         ],
@@ -270,10 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
               });
               fetchWeather();
             },
-            child: Text(
-              isNepali ? 'ENGLISH' : 'नेपाली',
-              style: const TextStyle(color: Colors.white),
-            ),
+            child: Text(isNepali ? 'ENGLISH' : 'नेपाली', style: const TextStyle(color: Colors.white)),
           ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert, color: Colors.white),
@@ -291,44 +357,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     context: context,
                     applicationName: 'AgroCare',
                     applicationVersion: '1.0.0',
-                    children: [
-                      Text(isNepali
-                          ? 'यो एप किसानहरूको लागि हो।'
-                          : 'This app is built for farmers.'),
-                    ],
-                  );
-                  break;
-                case 'categories':
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(isNepali ? 'बाली वर्ग' : 'Crop Categories')),
+                    children: [Text(isNepali ? 'यो एप किसानहरूको लागि हो।' : 'This app is built for farmers.')],
                   );
                   break;
                 case 'history':
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => HistoryScreen(isNepali: isNepali),
-                    ),
+                    MaterialPageRoute(builder: (_) => HistoryScreen(isNepali: isNepali)),
                   );
                   break;
               }
             },
-            itemBuilder: (BuildContext context) => [
+            itemBuilder: (_) => [
               PopupMenuItem(value: 'logout', child: Text(isNepali ? 'लगआउट' : 'Logout')),
               PopupMenuItem(value: 'about', child: Text(isNepali ? 'एपको बारेमा' : 'About')),
-              PopupMenuItem(value: 'categories', child: Text(isNepali ? 'बाली वर्ग' : 'Crop Categories')),
               PopupMenuItem(value: 'history', child: Text(isNepali ? 'इतिहास' : 'History')),
             ],
           ),
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             buildWeatherBox(),
             buildDiagnosisCard(),
+            buildCropTipsCard(),
           ],
         ),
       ),
