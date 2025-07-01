@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:plantd/screen/home_screen.dart';
-
+import '../models/user_model.dart';
+import '../database/database_helper.dart'; // Required for DB functions
 
 class LoginSignupPage extends StatefulWidget {
   const LoginSignupPage({super.key});
@@ -40,6 +41,16 @@ class _LoginSignupPageState extends State<LoginSignupPage>
     _passwordController.dispose();
     _confirmPassController.dispose();
     super.dispose();
+  }
+
+  Future<bool> validateUser(String email, String password) async {
+    final db = await DatabaseHelper.instance.database;
+    final result = await db.query(
+      'users',
+      where: 'email = ? AND password = ?',
+      whereArgs: [email, password],
+    );
+    return result.isNotEmpty;
   }
 
   Map<String, String> get text => isNepali
@@ -131,8 +142,7 @@ class _LoginSignupPageState extends State<LoginSignupPage>
                           controller: _passwordController,
                           obscureText: true,
                           style: const TextStyle(color: Colors.white),
-                          decoration:
-                              _inputDecoration(text['password']!, Icons.lock),
+                          decoration: _inputDecoration(text['password']!, Icons.lock),
                         ),
                         if (!isLogin) ...[
                           const SizedBox(height: 16),
@@ -146,25 +156,64 @@ class _LoginSignupPageState extends State<LoginSignupPage>
                         ],
                         const SizedBox(height: 30),
                         GestureDetector(
-                          onTap: () {
-                            final email = _emailController.text;
-                            final pass = _passwordController.text;
+                          onTap: () async {
+                            final email = _emailController.text.trim();
+                            final pass = _passwordController.text.trim();
+                            final confirm = _confirmPassController.text.trim();
+
                             if (isLogin) {
-                              Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomeScreen(isNepali: isNepali),
-                              ),
-                            );
-                              // TODO: Implement login logic or call Firebase/Auth API
-                            } else {
-                              final confirm = _confirmPassController.text;
-                              if (pass == confirm) {
-                                print("Signing up: $email | $pass");
-                                // TODO: Implement signup logic
-                              } else {
-                                print("Passwords do not match!");
+                              if (email.isEmpty || pass.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Please enter email and password')),
+                                );
+                                return;
                               }
+
+                              final isValid = await validateUser(email, pass);
+                              if (isValid) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeScreen(isNepali: isNepali),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Invalid email or password')),
+                                );
+                              }
+                            } else {
+                              if (email.isEmpty || pass.isEmpty || confirm.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('All fields are required')),
+                                );
+                                return;
+                              }
+
+                              if (pass != confirm) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Passwords do not match')),
+                                );
+                                return;
+                              }
+
+                              final user = UserModel(
+                                email: email,
+                                password: pass,
+                                confirmPassword: confirm,
+                              );
+
+                              await DatabaseHelper.instance.insertUser(user);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Account created successfully!')),
+                              );
+
+                              setState(() {
+                                isLogin = true;
+                                _emailController.clear();
+                                _passwordController.clear();
+                                _confirmPassController.clear();
+                              });
                             }
                           },
                           child: Container(
