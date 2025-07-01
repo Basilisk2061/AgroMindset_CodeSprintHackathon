@@ -166,5 +166,94 @@ disease_data = {
         "solution_np": "Metalaxyl वा Mancozeb प्रयोग गर्नुहोस्। नील तले वा तामाजन्य औषधि प्रयोग गर्नुहोस्।",
         "image_url": "https://10.0.7.101:5000/static/images/Potato___Late_blight.png",
         "buy_link": "https://yourstore.com/buy/Potato___Late_blight"
+    },
+
+    "Strawberry___healthy": {
+        "description_en": "Strawberry plants with vibrant green leaves, firm stems, and plump red berries.",
+        "solution_en": "Ensure full sunlight, rich compost, drip irrigation, and remove old leaves.",
+        "description_np": "चम्किलो हरियो पात, बलिया हाँगा र रातो रसीला फल भएको स्वस्थ स्ट्रबेरी।",
+        "solution_np": "घाम, कम्पोस्ट, बूँद सिंचाइ, र पुराना पात हटाउनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Strawberry___healthy.png",
+        "buy_link": "https://yourstore.com/buy/Strawberry___healthy"
+    },
+    "Tomato___healthy": {
+        "description_en": "Tomato plants showing no signs of pests or disease with healthy fruits and foliage.",
+        "solution_en": "Use nitrogen-rich soil, prune lower leaves, stake plants, water regularly.",
+        "description_np": "दाग वा किरामुक्त स्वस्थ टमाटर बोट। हरियो पात र बलिया फलहरू।",
+        "solution_np": "नाइट्रोजन भएको माटो, तल्ला पात छाँट्ने, सहारा दिने, र नियमित पानी दिनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___healthy.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___healthy"
+    },
+    "Tomato___Bacterial_spot": {
+        "description_en": "Small dark spots on leaves and fruit caused by bacterial infection, leading to wilting.",
+        "solution_en": "Use copper sprays and remove infected parts. Rotate crops yearly.",
+        "description_np": "पात र फलमा साना कालो दाग हुने ब्याक्टेरियाबाट सर्ने रोग।",
+        "solution_np": "Copper स्प्रे प्रयोग गर्नुहोस्। संक्रमित भाग हटाउनुहोस्। बाली फेरबदल गर्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___Bacterial_spot.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___Bacterial_spot"
+    },
+    "Tomato___Early_blight": {
+        "description_en": "Concentric dark lesions on lower leaves, progressing upwards and reducing yield.",
+        "solution_en": "Apply Mancozeb or Chlorothalonil. Improve air flow between plants.",
+        "description_np": "तल्लो पातबाट सुरु हुने गोलो दाग लाग्ने रोग। उत्पादन घटाउँछ।",
+        "solution_np": "Mancozeb वा Chlorothalonil प्रयोग गर्नुहोस्। बोटहरूबीचको दूरी बढाउनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___Early_blight.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___Early_blight"
+    },
+    "Tomato___Late_blight": {
+        "description_en": "Large water-soaked spots that turn brown rapidly, leading to plant death.",
+        "solution_en": "Use Metalaxyl or copper-based sprays. Avoid overhead watering.",
+        "description_np": "भिजेको जस्तो देखिने ठूलो दाग जसले बोट सखाप गर्न सक्छ।",
+        "solution_np": "Metalaxyl वा तामाजन्य औषधि प्रयोग गर्नुहोस्। माथिबाट पानी नहाल्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___Late_blight.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___Late_blight"
+    },
+    "Tomato___Leaf_Mold": {
+        "description_en": "Yellow patches on top leaf surface and mold underneath, common in humid conditions.",
+        "solution_en": "Use Chlorothalonil or Mancozeb. Improve air circulation and reduce humidity.",
+        "description_np": "पातमाथि पहेँलो र तल सढेको जस्तो देखिने रोग।",
+        "solution_np": "Chlorothalonil वा Mancozeb प्रयोग गर्नुहोस्। हावा चल्ने व्यवस्था मिलाउनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___Leaf_Mold.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___Leaf_Mold"
+    },
+    "Tomato___Septoria_leaf_spot": {
+        "description_en": "Circular dark brown spots with light centers on lower leaves.",
+        "solution_en": "Remove infected leaves. Use fungicides like Mancozeb.",
+        "description_np": "तल्लो पातमा साना गोलो दागहरू आउने फङ्गस रोग।",
+        "solution_np": "संक्रमित पात हटाउनुहोस्। Mancozeb प्रयोग गर्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___Septoria_leaf_spot.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___Septoria_leaf_spot"
+    },
+    "Tomato___Spider_mites Two-spotted_spider_mite": {
+        "description_en": "Fine webbing on leaves and small yellow or bronze speckles from mites.",
+        "solution_en": "Spray neem oil or insecticidal soap. Maintain humidity. Remove affected leaves.",
+        "description_np": "पातमा जालो बनाउने साना किराले पातमा पहेँलो दाग बनाउँछ।",
+        "solution_np": "नील तले छर्कनुहोस्। आर्द्रता कायम राख्नुहोस्। संक्रमित पात हटाउनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___Spider_mites_Two-spotted_spider_mite.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___Spider_mites"
+    },
+    "Tomato___Target_Spot": {
+        "description_en": "Dark lesions with concentric rings, usually on lower leaves, causing them to fall.",
+        "solution_en": "Use fungicides like Azoxystrobin. Remove debris. Improve spacing.",
+        "description_np": "पातमा गोली आकारका दाग लाग्ने फङ्गस रोग जसले पात झार्न सक्छ।",
+        "solution_np": "Azoxystrobin प्रयोग गर्नुहोस्। झरेका पात हटाउनुहोस्। दूरी मिलाउनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___Target_Spot.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___Target_Spot"
+    },
+    "Tomato___Tomato_mosaic_virus": {
+        "description_en": "Mottled yellow-green patches on leaves, distorted fruit, and stunted growth.",
+        "solution_en": "Remove infected plants. Disinfect tools. Use virus-resistant varieties.",
+        "description_np": "पातमा पहेँलो-हरियो धर्साहरू, फल बाङ्गो टिङ्गो।",
+        "solution_np": "संक्रमित बोट हटाउनुहोस्। उपकरण सफा गर्नुहोस्। भाइरस प्रतिरोधी जात प्रयोग गर्नुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___Tomato_mosaic_virus.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___Tomato_mosaic_virus"
+    },
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+        "description_en": "Leaves curl upward and yellowing occurs, causing reduced growth and yield.",
+        "solution_en": "Control whiteflies. Use insect netting. Grow virus-resistant varieties.",
+        "description_np": "पात मुढिन्छ र पहेँलो हुन्छ, बोटको वृद्धि घट्छ।",
+        "solution_np": "सेतो झिँगा नियन्त्रण गर्नुहोस्। कीरा जाली प्रयोग गर्नुहोस्। भाइरस प्रतिरोधी जात लगाउनुहोस्।",
+        "image_url": "https://10.0.7.101:5000/static/images/Tomato___Tomato_Yellow_Leaf_Curl_Virus.png",
+        "buy_link": "https://yourstore.com/buy/Tomato___Tomato_Yellow_Leaf_Curl_Virus"
     }
 }
