@@ -24,17 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final ImagePicker _picker = ImagePicker();
 
   final List<Map<String, String>> cropTips = [
-    {"crop": "Wheat", "tip": "Use certified seeds and irrigate at key stages like crown root initiation and flowering."},
-    {"crop": "Rice", "tip": "Transplant seedlings 20-25 days old and ensure proper water management."},
-    {"crop": "Maize", "tip": "Apply nitrogen fertilizer in 3 split doses and use improved varieties."},
-    {"crop": "Tomato", "tip": "Stake the plants, use mulch to conserve water, and monitor for blight."},
-    {"crop": "Potato", "tip": "Use disease-free tubers and apply ridge planting to improve aeration."},
     {"crop": "Apple", "tip": "Plant in well-drained soil; prune in winter for better fruiting."},
-    {"crop": "Orange", "tip": "Irrigate frequently in summer and protect from citrus canker."},
-    {"crop": "Grapes", "tip": "Train vines on trellises and spray against powdery mildew."},
-    {"crop": "Strawberry", "tip": "Use mulching to protect fruit and irrigate with drip method."},
+    {"crop": "Cauli", "tip": "Plant in cool season and apply nitrogen fertilizer in 2 splits."},
     {"crop": "Chilli", "tip": "Avoid waterlogging and monitor for aphids and mites."},
-    {"crop": "Cauliflower", "tip": "Plant in cool season and apply nitrogen fertilizer in 2 splits."},
+    {"crop": "Potato", "tip": "Use disease-free tubers and apply ridge planting to improve aeration."},
+    {"crop": "Strawberry", "tip": "Use mulching to protect fruit and irrigate with drip method."},
+    {"crop": "Tomato", "tip": "Stake the plants, use mulch to conserve water, and monitor for blight."},
   ];
 
   final List<String> cityOptions = [
@@ -191,13 +186,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: cropTips.map((item) {
                   final crop = item['crop']!;
                   final tip = item['tip']!;
-
-                  final imageAsset = crop.toLowerCase() == 'apple'
-                    ? 'assets/images/apple.png'
-                    : crop.toLowerCase() == 'potato'
-                        ? 'assets/images/potato.jpeg'
-                        : 'assets/images/${crop.toLowerCase()}.png';
-
+                  final fileName = crop.toLowerCase() == 'potato'
+                      ? 'potato.jpeg'
+                      : '${crop.toLowerCase()}.png';
 
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
@@ -228,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(6),
                                 child: Image.asset(
-                                  imageAsset,
+                                  'assets/images/$fileName',
                                   fit: BoxFit.contain,
                                   errorBuilder: (_, __, ___) => const Icon(Icons.image_not_supported),
                                 ),
