@@ -24,13 +24,50 @@ class _HomeScreenState extends State<HomeScreen> {
   final ImagePicker _picker = ImagePicker();
 
   final List<Map<String, String>> cropTips = [
-    {"crop": "Apple", "tip": "Plant in well-drained soil; prune in winter for better fruiting."},
-    {"crop": "Cauli", "tip": "Plant in cool season and apply nitrogen fertilizer in 2 splits."},
-    {"crop": "Chilli", "tip": "Avoid waterlogging and monitor for aphids and mites."},
-    {"crop": "Potato", "tip": "Use disease-free tubers and apply ridge planting to improve aeration."},
-    {"crop": "Strawberry", "tip": "Use mulching to protect fruit and irrigate with drip method."},
-    {"crop": "Tomato", "tip": "Stake the plants, use mulch to conserve water, and monitor for blight."},
-  ];
+  {
+    "crop": "Apple",
+    "tip":
+        "Plant apples in well-drained soil with good sunlight. Prune trees during winter to remove dead branches and enhance fruit production.",
+    "tip_np":
+        "स्याउ राम्रो घाम लाग्ने र पानी निकास राम्रो भएको माटोमा रोप्नुपर्छ। हिउँदमा सुख्खा हाँगा काटेर फल फल्ने क्षमता बढाउनुहोस्।"
+  },
+  {
+    "crop": "Cauli",
+    "tip":
+        "Plant cauliflower in cool seasons. Apply nitrogen fertilizer in two split doses and ensure regular watering during early growth stages.",
+    "tip_np":
+        "काउली चिसो मौसममा रोप्नुपर्छ। नाइट्रोजन मल दुई चरणमा हाल्नुहोस् र अंकुरणको समयमा नियमित सिँचाइ गर्नुहोस्।"
+  },
+  {
+    "crop": "Chilli",
+    "tip":
+        "Grow chilli in well-drained soil with full sun. Avoid waterlogging and regularly inspect for aphids, whiteflies, and mites.",
+    "tip_np":
+        "रातो खुर्सानी घाम राम्रो लाग्ने र पानीको निकास भएको माटोमा लगाउनुहोस्। पानी जम्न नदिनुहोस् र कीरा–फट्यांग्राको निगरानी गर्नुहोस्।"
+  },
+  {
+    "crop": "Potato",
+    "tip":
+        "Use healthy, disease-free seed tubers. Plant in ridges for better aeration and apply balanced fertilizers at regular intervals.",
+    "tip_np":
+        "रोग नलागेका तन्दुरुस्त बीउ प्रयोग गर्नुहोस्। राम्रो हावा आवतजावतका लागि उठेको बेडमा रोप्नुहोस् र समयमा मल हाल्नुहोस्।"
+  },
+  {
+    "crop": "Strawberry",
+    "tip":
+        "Use mulch to protect strawberries from rotting. Adopt drip irrigation and provide enough spacing between plants.",
+    "tip_np":
+        "स्ट्रबेरीलाई बिग्रनबाट जोगाउन मल्चिङ गर्नुहोस्। टप्का सिँचाइ प्रणाली प्रयोग गर्नुहोस् र बिरुवाबीच पर्याप्त दूरी राख्नुहोस्।"
+  },
+  {
+    "crop": "Tomato",
+    "tip":
+        "Stake tomato plants for support and apply mulch to retain soil moisture. Watch for blight and other fungal diseases.",
+    "tip_np":
+        "टमाटरका बोटलाई सहारा दिन बाँध्ने गर्नुहोस्। जमिनको भिजाइ कायम राख्न मल्च प्रयोग गर्नुहोस् र ढुसीको निगरानी गर्नुहोस्।"
+  },
+];
+
 
   final List<String> cityOptions = [
     'Current Location',
@@ -163,86 +200,87 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildCropTipsCard() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.only(top: 16),
-      decoration: BoxDecoration(
-        color: Colors.white12,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            isNepali ? 'बालीको सल्लाह' : 'Crop Cultivation Tips',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          const SizedBox(height: 12),
-          SizedBox(
-            height: 110,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: cropTips.map((item) {
-                  final crop = item['crop']!;
-                  final tip = item['tip']!;
-                  final fileName = crop.toLowerCase() == 'potato'
-                      ? 'potato.jpeg'
-                      : '${crop.toLowerCase()}.png';
+  return Container(
+    padding: const EdgeInsets.all(16),
+    margin: const EdgeInsets.only(top: 16),
+    decoration: BoxDecoration(
+      color: Colors.white12,
+      borderRadius: BorderRadius.circular(16),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          isNepali ? 'कृषि को सल्लाह' : 'Crop Cultivation Tips',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 110,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: cropTips.map((item) {
+                final crop = item['crop']!;
+                final tip = isNepali ? item['tip_np']! : item['tip']!;
+                final fileName = crop.toLowerCase() == 'potato'
+                    ? 'potato.jpeg'
+                    : '${crop.toLowerCase()}.png';
 
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: InkWell(
-                      onTap: () => showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          title: Text(crop),
-                          content: Text(tip),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('Close'),
-                            )
-                          ],
-                        ),
-                      ),
-                      child: Container(
-                        width: 90,
-                        height: 90,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(6),
-                                child: Image.asset(
-                                  'assets/images/$fileName',
-                                  fit: BoxFit.contain,
-                                  errorBuilder: (_, __, ___) => const Icon(Icons.image_not_supported),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              crop,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(color: Colors.black, fontSize: 11),
-                            ),
-                          ],
-                        ),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: InkWell(
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text(crop),
+                        content: Text(tip),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Close'),
+                          )
+                        ],
                       ),
                     ),
-                  );
-                }).toList(),
-              ),
+                    child: Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Image.asset(
+                                'assets/images/$fileName',
+                                fit: BoxFit.contain,
+                                errorBuilder: (_, __, ___) => const Icon(Icons.image_not_supported),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            crop,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: Colors.black, fontSize: 11),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
-          )
-        ],
-      ),
-    );
-  }
+          ),
+        )
+      ],
+    ),
+  );
+}
+
 
   Widget buildDiagnosisCard() {
     return Container(
